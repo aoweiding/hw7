@@ -1,0 +1,13 @@
+# Note: We moved Pronounce and PronounceArpa into a separate .grm file
+# for you, to reduce compilation time.  See cmudict.grm for comments.
+
+import 'byte.grm' as bytelib;
+Sigma = bytelib.kGraph | bytelib.kSpace;
+
+import 'cmudict.grm' as cmudict;
+Pronounce = cmudict.Pronounce;
+StressPattern = CDRewrite[(Sigma - bytelib.kDigit) : "", "", "", Sigma*, 'sim', 'obl'];
+Dacytl = ("1" | "2") "0" "0";  
+
+export Results = Optimize[Project[Pronounce @ StressPattern @ (Dacytl*), 'input']];
+export ListResults = "" : Results;

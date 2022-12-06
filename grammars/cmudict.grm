@@ -1,0 +1,9 @@
+# This may take a while to compile, because the dictionary is large.
+# Putting it in its own .grm file ensures that it will compile into
+# its own .far file.  That file will never have to be re-created
+# (unless someone changes cmudict.txt).
+
+export Pronounce = StringFile['cmudict.txt'];
+
+arpa = SymbolTable[’arpabet.sym’];
+export PronounceArpa = StringFile[’data/cmudict.txt’, byte, arpa];

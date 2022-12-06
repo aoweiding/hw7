@@ -1,0 +1,12 @@
+Zero = "0";
+One = "1";
+Bit = "0" | "1";
+Digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
+subParity1 = (Bit* Zero:Zero) | (Bit* One:One) | (" "* : Zero);
+export Cross = "a" (("b":"x")* | ("c"+ : "y"*) | ("":"fric")) "a";
+export BitFlip1 = Optimize[((Zero:One)| (One:Zero))*];
+export BitFlip2 = CDRewrite[(Zero:One)| (One:Zero),"","",Digit*];
+export Parity1 = subParity1;
+reverse1 = Reverse[Zero Bit*];
+reverse2 = Reverse[One Bit*];
+export Parity2 = (reverse1:Zero)|(reverse2:One)|(" "*:Zero);

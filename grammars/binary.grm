@@ -1,0 +1,13 @@
+Zero = "0";
+One = "1";
+Bit = Zero | One;
+Ones = One One One+;
+Zeros = Zero*;
+Pillars = (One One)*;
+notP = Bit* - Pillars;
+export Oddlets = Optimize[Zero*|(Bit* - (Bit* Zero (One One)+ Zero Bit*))];
+export Triplets = Optimize[ (Zeros | Ones)* ];
+export NotPillars = Optimize[notP];
+export First =  Zero Zero* Bit* One One One One? ;
+export Second =   Zero Bit* One One One+ ;
+export Disagreements = Optimize[ (First - Second) | (Second - First) ];
