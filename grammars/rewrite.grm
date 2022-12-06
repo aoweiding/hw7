@@ -10,3 +10,8 @@ export Parity1 = subParity1;
 reverse1 = Reverse[Zero Bit*];
 reverse2 = Reverse[One Bit*];
 export Parity2 = (reverse1:Zero)|(reverse2:One)|(" "*:Zero);
+
+
+export Parity3 = CDRewrite[(Bit*One:One)|(Bit*Zero:Zero)|(" "* : Zero),"[BOS]","[EOS]",Bit*|" "*];
+export UnParity = Invert[Parity3];
+export Split = CDRewrite["":" ",Bit,Bit*,(Bit*|""*|" "*)*,'ltr','opt'];
