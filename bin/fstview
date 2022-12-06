@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Usage: fstview [files...]
+
+umask 077   # files in ugrad /tmp dir shouldn't be readable by other students
+
+if [[ $# == 0 ]]; then
+   STDINFILE=/tmp/stdin.$$.fst
+   cat > $STDINFILE
+fi
+for FSTFILE in "$@" $STDINFILE; do
+   echo === $FSTFILE ===
+   fstinfo "$FSTFILE"                  # print info about the FST
+   FSTBASE=${FSTFILE%.*}               # remove filename extension
+   PDFFILE=/tmp/${FSTBASE##*/}.$$.pdf  # target name of pdf file in /tmp directory
+   fstdraw --portrait "$FSTFILE" | dot -Tpdf > "$PDFFILE"   # make pdf file
+   echo "Trying to show $PDFFILE ... if you are running this script on a"
+   echo "remote machine, this may still work if you connect using ssh -Y."
+   echo "Otherwise, use scp to copy $PDFFILE to your local machine."
+   echo "For a different file format, modify fstview (change \"pdf\" to \"svg\" or \"png\""
+   echo "or another popular image file extension) and change the viewing command."
+   cp "$PDFFILE" /Users/aoweiding/Desktop/Fall_2022/NLP/hw-ofst
+   if command -v xreader >/dev/null; then
+      acroread "$PDFFILE"                   # view pdf file
+   else
+      evince "$PDFFILE"
+                      # an alternative viewer
+   fi
+   echo
+done
